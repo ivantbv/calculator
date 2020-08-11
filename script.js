@@ -36,3 +36,21 @@ function factorial(n) {
 // 	let parsed = parseInt(stringed);
 // 	return parsed;
 // }
+
+//Create a new function operate that takes an operator and 2 
+//numbers and then calls one of the above functions on the numbers.
+
+
+function operate(x, oper, y) {
+	if (oper === '+') {
+		return add(x, y);
+	} else if (oper === '/') {
+		return divide(x, y);
+	} else if (oper === '*' || oper === 'x') {
+		return multiply(x, y);
+	} else if (oper = '-') {
+		return subtract(x, y);
+	} else if (oper = '**') {
+		return power(x, y);
+	}
+}

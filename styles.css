@@ -1,0 +1,91 @@
+@font-face {
+    src: url(fonts/digital-7.ttf);
+    font-family: digi;
+}
+
+body {
+    display: grid;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+}
+
+#wrapper {    
+    
+}
+
+#calculator {
+    display: grid;
+    grid-template: repeat(5, 75px) / repeat(4, 75px);
+    padding: 5px;
+    border: solid 3px rgba(72, 134, 204, 0.603);
+    grid-template-areas: 
+    "a a a a"
+    "b c d e"
+    "f g h i"
+    "j k l m"
+    "n o p q"
+}
+
+.btn {
+    font-size: larger;
+    border: 1px solid rgb(72, 134, 204);
+}
+#display {
+    grid-area: a;
+    font-size: 48px;
+    font-family: digi;
+    text-align: end;
+}
+
+.number-seven {
+    grid-area: b;
+}
+
+.number-seven {
+    /* width: 55px; */
+}
+
+.number-eight {
+    grid-area: c;
+}
+
+.number-nine {
+    grid-area: d;
+}
+
+.operator-divide {
+    grid-area: e;
+}
+
+.number-four {
+  grid-area: f;
+}
+
+.number-five {
+    grid-area: g;
+}
+.number-six {
+ grid-area: h;
+}
+
+.number-zero {
+    grid-area: n;
+}
+
+.operator-multiply {
+    grid-area: i;
+}
+
+.operator-subtract {
+    grid-area: m;
+}
+
+.operator-add {
+    grid-area: q;
+}
+
+.operator-equals {
+    grid-area: p;
+}
+
