@@ -7,7 +7,8 @@ body {
     display: grid;
     text-align: center;
     justify-content: center;
-    align-content: center;
+    /* align-content: center; */
+    background-color: thistle;
 }
 
 #wrapper {    
@@ -29,21 +30,32 @@ body {
 
 .btn {
     font-size: larger;
-    border: 1px solid rgb(72, 134, 204);
+    border: 1px solid rgba(72, 134, 204, 0.972);
+    background-color: whitesmoke;
+    outline:none;
 }
+
+.btn:hover {
+    background-color: rgba(72, 134, 204, 0.466);
+    border: 1px solid rgba(128, 128, 128, 0.322);
+}
+
 #display {
     grid-area: a;
     font-size: 48px;
     font-family: digi;
     text-align: end;
+    background-color: rgba(0, 128, 128, 0.418);
+    outline:none;
+    border: 1.2px solid rgb(72, 134, 204);
+}
+
+#display:active {
+    border-style: outset;
 }
 
 .number-seven {
     grid-area: b;
-}
-
-.number-seven {
-    /* width: 55px; */
 }
 
 .number-eight {
@@ -56,6 +68,11 @@ body {
 
 .operator-divide {
     grid-area: e;
+    background-color: rgba(255, 127, 80, 0.835);
+}
+
+.operator-divide:hover {
+    background-color: rgb(255, 127, 80);
 }
 
 .number-four {
@@ -75,17 +92,30 @@ body {
 
 .operator-multiply {
     grid-area: i;
+    background-color: rgba(255, 127, 80, 0.835);
+}
+.operator-multiply:hover {
+    background-color: rgb(255, 127, 80);
 }
 
 .operator-subtract {
     grid-area: m;
+    background-color: rgba(255, 127, 80, 0.835);
+}
+.operator-subtract:hover {
+    background-color: rgb(255, 127, 80);
 }
 
 .operator-add {
     grid-area: q;
+    background-color: rgba(255, 127, 80, 0.835);
+}
+.operator-add:hover {
+    background-color: rgb(255, 127, 80);
 }
 
 .operator-equals {
     grid-area: p;
+    
 }
 
