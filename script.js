@@ -37,9 +37,16 @@ function factorial(n) {
 // 	return parsed;
 // }
 
-//function operate that takes an operator and 2 
-//numbers and then calls one of the above functions on the numbers.
+const calcBtns = document.querySelectorAll('.nmb');
+const operBtns = document.querySelectorAll('.oper')
+const dispCont = document.querySelector('#display');
+const inputFromDisp = document.querySelector('#display').value;
 
+const equalSign = document.querySelector('.operator-equals');
+//const dispHistCont = document.querySelector('#disp-history');
+
+let displayValues;
+let numberValues = [];
 
 function operate(x, oper, y) {
 	if (oper === '+') {
@@ -55,16 +62,67 @@ function operate(x, oper, y) {
 	}
 }
 
-//Create the functions that populate the display when you click the number buttons… you 
-//should be storing the ‘display value’ in a variable somewhere for use in the next step.
-
-const calcBtns = document.querySelectorAll('.nmb');
-let dispCont = document.querySelector('#display')
-let displayValues;
 calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
 	
 	displayValues = dispCont.value += e.target.value;
-	console.log(displayValues);
+	//console.log(displayValues);
+	if (operBtns == true) {
+		displayValues = ''
+	}
 }));
 
+//You’ll need to store the first number that is input into the calculator when a user 
+//presses an operator, and also save which operation has been chosen and then operate() on 
+//them when the user presses the “=” key.
 
+function storingOper() {
+	operBtns.forEach(btn => btn.addEventListener('click', (e) => {
+		let operator = e.target.value;
+		console.log(operator);
+		//dispCont.value += e.target.value;
+		dispCont.value
+		//dispHistCont.value += e.target.value;
+		
+		//displayValues = '';
+		
+		//console.log(operator); logs the operator clicked
+		console.log(dispCont.value); //logs the current input on the display
+
+		//numberValues = dispCont.value;
+		//console.log(numberValues);
+		
+		function storingNums(numbies) {
+			numbies.push(dispCont.value);
+			return numbies;
+		}
+		//pushingNums();
+		storingNums(numberValues);
+
+	}))
+}
+storingOper();
+
+		equalSign.addEventListener('click', (e) => {
+
+			calcBtns.forEach(opera => {
+				//dispHistCont.value = dispCont.value;
+				//dispCont.value = '';
+			  });
+		})
+		let CE = document.querySelector('.clear');
+		CE.addEventListener('click', () => {
+			dispCont.value = '';
+			while (numberValues.length) {
+				numberValues.pop();
+			}
+			//dispHistCont.value = '';
+		})
+
+// let numClickAgain = function() {
+// 	calcBtns.forEach(btn => btn.addEventListener('click', () => {
+// 		if (operBtns.clicked == true) {
+// 		dispCont.value = '';
+// 	}
+// 	}))
+// }
+// numClickAgain();

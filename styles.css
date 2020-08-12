@@ -11,16 +11,21 @@ body {
     background-color: thistle;
 }
 
-#wrapper {    
-    
+#spacey {
+    height: 60px;
+}
+
+form {    
+    /* height: 509.99px; if the second display is activated*/
 }
 
 #calculator {
     display: grid;
-    grid-template: repeat(5, 75px) / repeat(4, 75px);
+    grid-template: repeat(5, 85px) / repeat(4, 85px);
     padding: 5px;
     border: solid 3px rgba(72, 134, 204, 0.603);
     grid-template-areas: 
+    /* "z z z z" if second disp is active*/
     "a a a a"
     "b c d e"
     "f g h i"
@@ -40,12 +45,22 @@ body {
     border: 1px solid rgba(128, 128, 128, 0.322);
 }
 
+/* #disp-history {
+    grid-area: z;
+    font-size: 32px;
+    font-family: digi;
+    text-align: end;
+    background-color: rgba(3, 184, 130, 0.418);
+    outline:none;
+    border: 1.2px solid rgb(72, 134, 204);
+} */
+
 #display {
     grid-area: a;
     font-size: 48px;
     font-family: digi;
     text-align: end;
-    background-color: rgba(0, 128, 128, 0.418);
+    background-color: rgba(3, 184, 184, 0.418);
     outline:none;
     border: 1.2px solid rgb(72, 134, 204);
 }
