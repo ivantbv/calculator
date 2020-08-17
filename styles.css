@@ -25,7 +25,7 @@ form {
     padding: 5px;
     border: solid 3px rgba(72, 134, 204, 0.603);
     grid-template-areas: 
-    /* "z z z z" if second disp is active*/
+    "z z z z" 
     "a a a a"
     "b c d e"
     "f g h i"
@@ -45,15 +45,15 @@ form {
     border: 1px solid rgba(128, 128, 128, 0.322);
 }
 
-/* #disp-history {
+#disp-history {
     grid-area: z;
-    font-size: 32px;
+    font-size: 35px;
     font-family: digi;
     text-align: end;
     background-color: rgba(3, 184, 130, 0.418);
     outline:none;
     border: 1.2px solid rgb(72, 134, 204);
-} */
+}
 
 #display {
     grid-area: a;
@@ -103,6 +103,8 @@ form {
 
 .number-zero {
     grid-area: n;
+    height: 5.31rem; 
+     /* ^ if disp history is active  */
 }
 
 .operator-multiply {

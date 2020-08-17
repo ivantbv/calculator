@@ -1,21 +1,18 @@
 function add (...x) {
-		const result = x.reduce((a,b) => a += b);
-		return Number(result);		
+	return Number(result = x.reduce((a,b) => a += b));		
 }
 
 function subtract (...x) {
-	const result = x.reduce((a,b) => a -= b);
-	return Number(result);
+	return Number(result = x.reduce((a,b) => a -= b));
 }
 
 function multiply (...x) {
-	const result = x.reduce((a,b) => a *= b);
-	return Number(result);
+	return Number(result = x.reduce((a,b) => a *= b));
 }
 
 function divide(...x) {
-    const result = x.reduce((a,b) => a /= b);
-    return Number(result);
+    return Number(result = x.reduce((a,b) => a /= b));
+    
 }
 
 function power(x,y) {
@@ -30,99 +27,110 @@ function factorial(n) {
 	}
 }
 
-// function sum (a) {
-// 	let result = a.reduce((a, b) => a + b,0)
-// 	let stringed = result.toString();
-// 	let parsed = parseInt(stringed);
-// 	return parsed;
+/* Refactored factorial function: */
+
+// function factorial(n) {
+// 	return n !== 0 ? n * factorial(n - 1) : 1;
 // }
 
 const calcBtns = document.querySelectorAll('.nmb');
 const operBtns = document.querySelectorAll('.oper')
 const dispCont = document.querySelector('#display');
-const inputFromDisp = document.querySelector('#display').value;
+const histDispCont = document.querySelector('#disp-history');
+const inputFromDisp = dispCont.value;
+const equalSign = document.querySelector('.operator-equals')
 
-const equalSign = document.querySelector('.operator-equals');
-//const dispHistCont = document.querySelector('#disp-history');
-
-let displayValues;
-let numberValues = [];
-
+const allOperators = document.querySelectorAll('.oper');
+const plus = document.querySelector('.operator-add').value;
+const divideSign = document.querySelector('.operator-divide').value;
+const multiplySign = document.querySelector('.operator-multiply').value;
+const subtractSign = document.querySelector('.operator-subtract').value;
+ 
 function operate(x, oper, y) {
+	console.log(x, oper, y)
 	if (oper === '+') {
 		return add(x, y);
-	} else if (oper === '/') {
+	} else if (oper === '/' || oper === '÷') {
 		return divide(x, y);
 	} else if (oper === '*' || oper === 'x') {
 		return multiply(x, y);
-	} else if (oper = '-') {
+	} else if (oper === '-') {
 		return subtract(x, y);
-	} else if (oper = '**') {
+	} else if (oper === '**') {
 		return power(x, y);
 	}
 }
 
+function isInArray(value, array) {
+	for (let i = 0; i <= array; i++) {
+		if (isInArray('+', numberValues) || isInArray('-', numberValues) || isInArray('/', numberValues) || isInArray('*', numberValues) || isInArray('**', numberValues)) {
+			 array.pop('+');
+			 array.pop('-');
+			 array.pop('*');
+			 array.pop('/');
+		}
+		}
+	return array;
+  }
+
+let displayValues;
+let numberValues = [];
+let operatorValues = [];
+let afterOperatorNumbers = [];
+
 calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
 	
 	displayValues = dispCont.value += e.target.value;
-	//console.log(displayValues);
-	if (operBtns == true) {
-		displayValues = ''
-	}
+	numberValues = displayValues;
 }));
+ allOperators.forEach(btn => btn.addEventListener('click', (e) => {
+	
+	//histDispCont.value = e.target.value;
+	histDispCont.value = dispCont.value + e.target.value;
+	operatorValues += e.target.value;
+	dispCont.value = '';
+	
+	console.log(e.target.value);
 
-//You’ll need to store the first number that is input into the calculator when a user 
+	// console.log(isInArray(dispCont.value, dispCont.value));
+ }));
+
+//  allOperators.forEach(btn => btn.addEventListener('click', (e) => {
+
+//  }))
+
+equalSign.addEventListener('click', function() {
+	histDispCont.value += dispCont.value;
+	dispCont.value = ''; 
+	let result = operate(parseInt(histDispCont.value), operatorValues.split('').filter(function(item, pos, self) {
+      return self.indexOf(item) == pos;
+    }).join(''), parseInt(numberValues))
+
+	dispCont.value = result;
+
+	console.log(dispCont.value = result)
+})
+
+//display-history should listen for clicks on the equals and dispaly the
+//result. While the normal dispaly should be displaying the numbers and operators and
+//after the equals should become empty.
+
+//need to store the first number that is input into the calculator when a user 
 //presses an operator, and also save which operation has been chosen and then operate() on 
 //them when the user presses the “=” key.
 
-function storingOper() {
-	operBtns.forEach(btn => btn.addEventListener('click', (e) => {
-		let operator = e.target.value;
-		console.log(operator);
-		//dispCont.value += e.target.value;
-		dispCont.value
-		//dispHistCont.value += e.target.value;
-		
-		//displayValues = '';
-		
-		//console.log(operator); logs the operator clicked
-		console.log(dispCont.value); //logs the current input on the display
-
-		//numberValues = dispCont.value;
-		//console.log(numberValues);
-		
-		function storingNums(numbies) {
-			numbies.push(dispCont.value);
-			return numbies;
-		}
-		//pushingNums();
-		storingNums(numberValues);
-
-	}))
+let pushingNums = function(numbies) {
+	numbies.push(numberValues);
 }
-storingOper();
 
-		equalSign.addEventListener('click', (e) => {
-
-			calcBtns.forEach(opera => {
-				//dispHistCont.value = dispCont.value;
-				//dispCont.value = '';
-			  });
-		})
-		let CE = document.querySelector('.clear');
-		CE.addEventListener('click', () => {
-			dispCont.value = '';
-			while (numberValues.length) {
-				numberValues.pop();
-			}
-			//dispHistCont.value = '';
-		})
-
-// let numClickAgain = function() {
-// 	calcBtns.forEach(btn => btn.addEventListener('click', () => {
-// 		if (operBtns.clicked == true) {
-// 		dispCont.value = '';
-// 	}
-// 	}))
-// }
-// numClickAgain();
+    const CE = document.querySelector('.clear');
+    CE.addEventListener('click', () => {
+		displayValues = '';
+		dispCont.value = '';
+		histDispCont.value = '';
+        // while (numberValues.length) {
+        //     numberValues.pop();
+		// }
+		numberValues = [];
+		operatorValues = []
+    })
