@@ -102,14 +102,16 @@ calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
 equalSign.addEventListener('click', function() {
 	histDispCont.value += dispCont.value;
 	dispCont.value = ''; 
-	let result = operate(parseInt(histDispCont.value), operatorValues.split('').filter(function(item, pos, self) {
-      return self.indexOf(item) == pos;
-    }).join(''), parseInt(numberValues))
+	let result = operate(parseInt(histDispCont.value), operatorValues.charAt(operatorValues.length-1), parseInt(numberValues))
 
 	dispCont.value = result;
 
 	console.log(dispCont.value = result)
 })
+
+// .split('').filter(function(item, pos, self) {
+// 	return self.indexOf(item) == pos;
+//   }).join('')
 
 //display-history should listen for clicks on the equals and dispaly the
 //result. While the normal dispaly should be displaying the numbers and operators and
