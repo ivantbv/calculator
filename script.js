@@ -22,6 +22,8 @@ function factorial(n) {
 	return n !== 0 ? n * factorial(n - 1) : 1;
 }
 
+//a = ~a + 1; - use the bitwises operator to implement a negate function ±
+
 const calcBtns = document.querySelectorAll('.nmb');
 const operBtns = document.querySelectorAll('.oper')
 const dispCont = document.querySelector('#display');
@@ -35,6 +37,7 @@ const divideSign = document.querySelector('.operator-divide').value;
 const multiplySign = document.querySelector('.operator-multiply').value;
 const subtractSign = document.querySelector('.operator-subtract').value;
 const factorialOper = document.querySelector('.operator-factorial');
+const decimalPoint = document.querySelector('.point')
 const backspace = document.querySelector('.backspace');
 let reggie = new RegExp(/^\d*\.?\d*$/);
  
@@ -43,7 +46,11 @@ function operate(x, oper, y) {
 	if (oper === '+') {
 		return add(x, y);
 	} else if (oper === '/' || oper === '÷') {
+		if (y === 0) {
+			return 'Can\'t divide by 0'
+		} else {
 		return divide(x, y);
+	}
 	} else if (oper === '*' || oper === 'x') {
 		return multiply(x, y);
 	} else if (oper === '-') {
@@ -70,6 +77,32 @@ let numberValues = [];
 let operatorValues = [];
 let afterOperatorNumbers = [];
 
+document.addEventListener('keypress', (e) => {
+	if (e.which == 49) {
+		dispCont.value += Number(1);
+	} else if (e.which == 50) {
+		dispCont.value += Number(2);
+	} else if (e.which == 51) {
+		dispCont.value += Number(3);
+	} else if (e.which == 52) {
+		dispCont.value += Number(4);
+	} else if (e.which == 53) {
+		dispCont.value += Number(5);
+	} else if (e.which == 54) {
+		dispCont.value += Number(6);
+	} else if (e.which == 55) {
+		dispCont.value += Number(7);
+	} else if (e.which == 56) {
+		dispCont.value += Number(8);
+	} else if (e.which == 57) {
+		dispCont.value += Number(9);
+	} else if (e.which == 48) {
+		dispCont.value += Number(0);
+	}
+})
+
+
+
 calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
 	
 	displayValues = dispCont.value += e.target.value;
@@ -87,14 +120,24 @@ calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
 	// console.log(isInArray(dispCont.value, dispCont.value));
  }));
 
-equalSign.addEventListener('click', function() {
+equalSign.addEventListener('click', function(e) {
+	if (histDispCont.value == '') {
+		//stop from clicking if display is empty
+		
+		
+		//dispCont.value = operate(parseFloat(histDispCont.value), '+', parseFloat(histDispCont))
+		e.disabled = true
+		histDispCont.value = '';
+		histDispCont.value = dispCont.value;
+	} else {
 	histDispCont.value += dispCont.value;
 	dispCont.value = ''; 
-	let result = operate(parseInt(histDispCont.value), operatorValues.charAt(operatorValues.length-1), parseInt(numberValues))
+	let result = operate(parseFloat(histDispCont.value), operatorValues.charAt(operatorValues.length-1), parseFloat(numberValues))
 
 	dispCont.value = result;
-
 	console.log(dispCont.value = result)
+	e.disabled = false;
+}
 });
 
 factorialOper.addEventListener('click', () => {
@@ -102,8 +145,16 @@ factorialOper.addEventListener('click', () => {
 	numberValues = dispCont.value;
 	histDispCont.value = `fact(${dispCont.value})`; 
 	let result = factorial(numberValues);
+	dispCont.value = +(result.toFixed(8));
+})
 
-	dispCont.value = result;
+decimalPoint.addEventListener('click', (e) => {
+	console.log(e.target)
+	if (e.target.length > 1) {
+		e.target.disabled = true
+	} else if (e.target.length <= 1){
+		e.target.disabled = false;
+	}
 })
 
 // .split('').filter(function(item, pos, self) {
