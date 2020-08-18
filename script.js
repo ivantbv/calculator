@@ -12,7 +12,6 @@ function multiply (...x) {
 
 function divide(...x) {
     return Number(result = x.reduce((a,b) => a /= b));
-    
 }
 
 function power(x,y) {
@@ -20,18 +19,8 @@ function power(x,y) {
 }
 
 function factorial(n) {
-	if (n !=0) {
-		return n * factorial(n -1);
-	} else {
-		return 1
-	}
+	return n !== 0 ? n * factorial(n - 1) : 1;
 }
-
-/* Refactored factorial function: */
-
-// function factorial(n) {
-// 	return n !== 0 ? n * factorial(n - 1) : 1;
-// }
 
 const calcBtns = document.querySelectorAll('.nmb');
 const operBtns = document.querySelectorAll('.oper')
@@ -45,6 +34,9 @@ const plus = document.querySelector('.operator-add').value;
 const divideSign = document.querySelector('.operator-divide').value;
 const multiplySign = document.querySelector('.operator-multiply').value;
 const subtractSign = document.querySelector('.operator-subtract').value;
+const factorialOper = document.querySelector('.operator-factorial');
+const backspace = document.querySelector('.backspace');
+let reggie = new RegExp(/^\d*\.?\d*$/);
  
 function operate(x, oper, y) {
 	console.log(x, oper, y)
@@ -56,7 +48,7 @@ function operate(x, oper, y) {
 		return multiply(x, y);
 	} else if (oper === '-') {
 		return subtract(x, y);
-	} else if (oper === '**') {
+	} else if (oper === '^' || oper === 'x^') {
 		return power(x, y);
 	}
 }
@@ -95,10 +87,6 @@ calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
 	// console.log(isInArray(dispCont.value, dispCont.value));
  }));
 
-//  allOperators.forEach(btn => btn.addEventListener('click', (e) => {
-
-//  }))
-
 equalSign.addEventListener('click', function() {
 	histDispCont.value += dispCont.value;
 	dispCont.value = ''; 
@@ -107,6 +95,15 @@ equalSign.addEventListener('click', function() {
 	dispCont.value = result;
 
 	console.log(dispCont.value = result)
+});
+
+factorialOper.addEventListener('click', () => {
+	// dispCont.value += `fact(${dispCont.value})`;
+	numberValues = dispCont.value;
+	histDispCont.value = `fact(${dispCont.value})`; 
+	let result = factorial(numberValues);
+
+	dispCont.value = result;
 })
 
 // .split('').filter(function(item, pos, self) {
@@ -135,4 +132,8 @@ let pushingNums = function(numbies) {
 		// }
 		numberValues = [];
 		operatorValues = []
-    })
+	})
+	
+	backspace.addEventListener('click', () => {
+		dispCont.value = dispCont.value.substring(0, dispCont.value.length-1)
+	})

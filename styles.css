@@ -21,16 +21,18 @@ form {
 
 #calculator {
     display: grid;
-    grid-template: repeat(5, 85px) / repeat(4, 85px);
+    grid-template: repeat(6, 85px) / repeat(4, 85px);
     padding: 5px;
     border: solid 3px rgba(72, 134, 204, 0.603);
     grid-template-areas: 
     "z z z z" 
     "a a a a"
+    "r s t u"
     "b c d e"
     "f g h i"
     "j k l m"
     "n o p q"
+    
 }
 
 .btn {
@@ -69,6 +71,14 @@ form {
     border-style: outset;
 }
 
+.backspace {
+    grid-area: r;
+}
+
+.clear {
+    grid-area: s;
+}
+
 .number-seven {
     grid-area: b;
 }
@@ -87,6 +97,24 @@ form {
 }
 
 .operator-divide:hover {
+    background-color: rgb(255, 127, 80);
+}
+
+.operator-factorial {
+    background-color: rgba(255, 127, 80, 0.835);
+    grid-area: t;
+}
+
+.operator-factorial:hover {
+    background-color: rgb(255, 127, 80);
+}
+
+.operator-power {
+    background-color: rgba(255, 127, 80, 0.835);
+    grid-area: u;
+}
+
+.operator-power:hover {
     background-color: rgb(255, 127, 80);
 }
 
