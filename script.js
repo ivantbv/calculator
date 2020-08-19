@@ -77,30 +77,6 @@ let numberValues = [];
 let operatorValues = [];
 let afterOperatorNumbers = [];
 
-document.addEventListener('keypress', (e) => {
-	if (e.which == 49) {
-		dispCont.value += Number(1);
-	} else if (e.which == 50) {
-		dispCont.value += Number(2);
-	} else if (e.which == 51) {
-		dispCont.value += Number(3);
-	} else if (e.which == 52) {
-		dispCont.value += Number(4);
-	} else if (e.which == 53) {
-		dispCont.value += Number(5);
-	} else if (e.which == 54) {
-		dispCont.value += Number(6);
-	} else if (e.which == 55) {
-		dispCont.value += Number(7);
-	} else if (e.which == 56) {
-		dispCont.value += Number(8);
-	} else if (e.which == 57) {
-		dispCont.value += Number(9);
-	} else if (e.which == 48) {
-		dispCont.value += Number(0);
-	}
-})
-
 
 
 calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
@@ -120,15 +96,38 @@ calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
 	// console.log(isInArray(dispCont.value, dispCont.value));
  }));
 
+ document.addEventListener('keypress', (e) => {
+	if (e.which == 49) {
+		dispCont.value += 1;
+	} else if (e.which == 50) {
+		dispCont.value += 2;
+	} else if (e.which == 51) {
+		dispCont.value += 3;
+	} else if (e.which == 52) {
+		dispCont.value += 4;
+	} else if (e.which == 53) {
+		dispCont.value += 5;
+	} else if (e.which == 54) {
+		dispCont.value += 6;
+	} else if (e.which == 55) {
+		dispCont.value += 7;
+	} else if (e.which == 56) {
+		dispCont.value += 8;
+	} else if (e.which == 57) {
+		dispCont.value += 9;
+	} else if (e.which == 48) {
+		dispCont.value += 0;
+	}
+	numberValues = dispCont.value;
+})
+
 equalSign.addEventListener('click', function(e) {
 	if (histDispCont.value == '') {
 		//stop from clicking if display is empty
 		
-		
 		//dispCont.value = operate(parseFloat(histDispCont.value), '+', parseFloat(histDispCont))
 		e.disabled = true
 		histDispCont.value = '';
-		histDispCont.value = dispCont.value;
 	} else {
 	histDispCont.value += dispCont.value;
 	dispCont.value = ''; 
