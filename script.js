@@ -30,14 +30,17 @@ const inputFromDisp = dispCont.value;
 const equalSign = document.querySelector('.operator-equals')
 
 const allOperators = document.querySelectorAll('.oper');
-const plus = document.querySelector('.operator-add').value;
-const divideSign = document.querySelector('.operator-divide').value;
-const multiplySign = document.querySelector('.operator-multiply').value;
-const subtractSign = document.querySelector('.operator-subtract').value;
+// const plus = document.querySelector('.operator-add').value;
 const factorialOper = document.querySelector('.operator-factorial');
 const decimalPoint = document.querySelector('.point')
 const backspace = document.querySelector('.backspace');
-let reggie = new RegExp(/^\d*\.?\d*$/);
+
+const plusSign = document.querySelector('.operator-add');
+const divideSign = document.querySelector('.operator-divide');
+const multiplySign = document.querySelector('.operator-multiply');
+
+const subtractSign = document.querySelector('.operator-subtract');
+const powerSign = document.querySelector('.operator-power');
  
 function operate(x, oper, y) {
 	console.log(x, oper, y)
@@ -65,26 +68,15 @@ function isInArray(array) {
 			 array.pop('-');
 			 array.pop('*');
 			 array.pop('/');
-			 array.pop('1');
-			 array.pop('2');
-			 array.pop('3');
-			 array.pop('4');
-			 array.pop('5');
-			 array.pop('6');
-			 array.pop('7');
-			 array.pop('8');
-			 array.pop('9');
-			 array.pop('0');
 		}
 		}
 	return array;
   }
-
+let shiftPressed = false;
 let displayValues;
 let numberValues = [];
 let operatorValues = [];
 let afterOperatorNumbers = [];
-
 
 
 calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
@@ -92,17 +84,15 @@ calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
 	displayValues = dispCont.value += e.target.value;
 	numberValues = displayValues;
 }));
- allOperators.forEach(btn => btn.addEventListener('click', (e) => {
-	
-	//histDispCont.value = e.target.value;
-	histDispCont.value = dispCont.value + e.target.value;
-	operatorValues += e.target.value;
-	dispCont.value = '';
-	
-	console.log(e.target.value);
 
-	// console.log(isInArray(dispCont.value, dispCont.value));
- }));
+function operatorFunc(e) {
+		//histDispCont.value = e.target.value;
+		histDispCont.value = dispCont.value + e.target.value;
+		operatorValues += e.target.value;
+		dispCont.value = '';
+}
+
+ allOperators.forEach(btn => btn.addEventListener('click', operatorFunc));
 
  document.addEventListener('keydown', (e) => {
 	 e.preventDefault();
@@ -123,7 +113,11 @@ calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
 	} else if (e.which == 55) {
 		dispCont.value += 7;
 	} else if (e.which == 56) {
+		if (shiftPressed == true) {
+			return;
+		} else {
 		dispCont.value += 8;
+	}
 	} else if (e.which == 57) {
 		dispCont.value += 9;
 	} else if (e.which == 46) {
@@ -139,7 +133,7 @@ calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
 	} 	
 	else if (e.which == 48) {
 		dispCont.value += 0;
-	} else if (e.which == 190) {
+	} else if (e.which == 190 || e.which == 46) {
 		if (dispCont.value.indexOf('.') > -1){
             return;
         } else {
@@ -148,9 +142,42 @@ calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
 		//dispCont.value += decimalPoint.value;
 	} else if (e.which == 13) {
 		equalFunc(e);
-	}
-		console.log(e.which);
+	} else if (e.which == 107 || e.which == 187) {
+		histDispCont.value = dispCont.value + plusSign.value;
+		operatorValues += plusSign.value;
+		dispCont.value = '';
+	} else if (e.which == 189 || e.which == 109) {
+		//histDispCont.value = dispCont.value + operatorFunc(e);
+		histDispCont.value = dispCont.value + subtractSign.value;
+		operatorValues += subtractSign.value;
+		dispCont.value = '';
+	} else if (e.which == 111  || e.which == 191) {
+		histDispCont.value = dispCont.value + divideSign.value;
+		operatorValues += divideSign.value;
+		dispCont.value = '';
+	} 
+	
+	// else if (e.which == 106 || e.which == 42) {
+	// 	histDispCont.value = dispCont.value + multiplySign.value;
+	// 	operatorValues += multiplySign.value;
+	// 	dispCont.value = '';
+	// }
+	console.log(e.shiftKey, e.which);
+	
 	numberValues = dispCont.value;
+})
+document.addEventListener('keydown', function(e) {
+	if (e.which == 16) {shiftPressed = true;} 
+
+	if (e.which == 56 && shiftPressed) {
+		histDispCont.value = dispCont.value + multiplySign.value;
+		operatorValues += multiplySign.value;
+		dispCont.value = '';
+	}
+});
+
+document.addEventListener('keyup', function(e) {
+	if(e.which == 16) { shiftPressed = false}	
 })
 
 equalSign.addEventListener('click', equalFunc);
