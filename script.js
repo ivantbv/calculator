@@ -61,9 +61,10 @@ function operate(x, oper, y) {
 	}
 }
 
-function isInArray(array) {
+function isInArray(array, values) {
 	for (let i = 0; i <= array; i++) {
-		if (isInArray('+', numberValues) || isInArray('-', numberValues) || isInArray('/', numberValues) || isInArray('*', numberValues) || isInArray('**', numberValues)) {
+		if (isInArray('+', values) || isInArray('-', values)
+		 || isInArray('/', values) || isInArray('*', values) || isInArray('**', values)) {
 			 array.pop('+');
 			 array.pop('-');
 			 array.pop('*');
@@ -96,21 +97,25 @@ function operatorFunc(e) {
 
  document.addEventListener('keydown', (e) => {
 	 e.preventDefault();
-	if (e.which == 49) {
+	if (e.which == 49 || e.which == 97) {
 		dispCont.value += 1;
 		numberValues = displayValues;
-	} else if (e.which == 50) {
+	} else if (e.which == 50 || e.which == 98) {
 		dispCont.value += 2;
 		numberValues = displayValues;
-	} else if (e.which == 51) {
+	} else if (e.which == 51 || e.which == 99) {
 		dispCont.value += 3;
-	} else if (e.which == 52) {
+	} else if (e.which == 52 || e.which == 100) {
 		dispCont.value += 4;
-	} else if (e.which == 53) {
+	} else if (e.which == 53 || e.which == 101) {
 		dispCont.value += 5;
-	} else if (e.which == 54) {
+	} else if (e.which == 54 || e.which == 102) {
+		if (shiftPressed == true) {
+			return;
+		} else {
 		dispCont.value += 6;
-	} else if (e.which == 55) {
+	}
+	} else if (e.which == 55 || e.which == 103) {
 		dispCont.value += 7;
 	} else if (e.which == 56) {
 		if (shiftPressed == true) {
@@ -118,7 +123,7 @@ function operatorFunc(e) {
 		} else {
 		dispCont.value += 8;
 	}
-	} else if (e.which == 57) {
+	} else if (e.which == 57 || e.which == 104) {
 		dispCont.value += 9;
 	} else if (e.which == 46) {
 		displayValues = '';
@@ -131,9 +136,9 @@ function operatorFunc(e) {
 	} else if (e.which == 78) {
 		calcFactorial();
 	} 	
-	else if (e.which == 48) {
+	else if (e.which == 48 || e.which == 96) {
 		dispCont.value += 0;
-	} else if (e.which == 190 || e.which == 46) {
+	} else if (e.which == 190 || e.which == 110) {
 		if (dispCont.value.indexOf('.') > -1){
             return;
         } else {
@@ -142,7 +147,7 @@ function operatorFunc(e) {
 		//dispCont.value += decimalPoint.value;
 	} else if (e.which == 13) {
 		equalFunc(e);
-	} else if (e.which == 107 || e.which == 187) {
+	} else if (e.which == 107) {
 		histDispCont.value = dispCont.value + plusSign.value;
 		operatorValues += plusSign.value;
 		dispCont.value = '';
@@ -155,14 +160,8 @@ function operatorFunc(e) {
 		histDispCont.value = dispCont.value + divideSign.value;
 		operatorValues += divideSign.value;
 		dispCont.value = '';
-	} 
-	
-	// else if (e.which == 106 || e.which == 42) {
-	// 	histDispCont.value = dispCont.value + multiplySign.value;
-	// 	operatorValues += multiplySign.value;
-	// 	dispCont.value = '';
-	// }
-	console.log(e.shiftKey, e.which);
+	}
+	console.log(e.which);
 	
 	numberValues = dispCont.value;
 })
@@ -173,7 +172,16 @@ document.addEventListener('keydown', function(e) {
 		histDispCont.value = dispCont.value + multiplySign.value;
 		operatorValues += multiplySign.value;
 		dispCont.value = '';
+	} else if (e.which == 54 && shiftPressed) {
+		histDispCont.value = dispCont.value + powerSign.value;
+		operatorValues += powerSign.value;
+		dispCont.value = '';
+	} else if (e.which == 187 && shiftPressed) {
+		histDispCont.value = dispCont.value + plusSign.value;
+		operatorValues += plusSign.value;
+		dispCont.value = '';
 	}
+	//add the plusSign as well
 });
 
 document.addEventListener('keyup', function(e) {
@@ -201,7 +209,6 @@ function equalFunc(e) {
 	let result = operate(parseFloat(histDispCont.value), operatorValues.charAt(operatorValues.length-1), parseFloat(numberValues))
 	let rounded = Math.round(result * 100000) / 100000;
 	dispCont.value = rounded;
-	//console.log(dispCont.value = result)
 	e.disabled = false;
 }
 }
@@ -216,7 +223,6 @@ function calcFactorial() {
 	dispCont.value = +(result.toFixed(8));
 	}
 }
-
 factorialOper.addEventListener('click', calcFactorial);
 
 decimalPoint.addEventListener('click', (e) => {
