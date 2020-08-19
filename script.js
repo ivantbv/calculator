@@ -1,25 +1,23 @@
 function add (...x) {
-	return Number(result = x.reduce((a,b) => a += b));		
+	return result = x.reduce((a,b) => a += b);		
 }
-
 function subtract (...x) {
-	return Number(result = x.reduce((a,b) => a -= b));
+	return result = x.reduce((a,b) => a -= b);
 }
-
 function multiply (...x) {
-	return Number(result = x.reduce((a,b) => a *= b));
+	return result = x.reduce((a,b) => a *= b);
 }
-
 function divide(...x) {
-    return Number(result = x.reduce((a,b) => a /= b));
+    return result = x.reduce((a,b) => a /= b);
 }
-
 function power(x,y) {
 	return x ** y;
 }
-
 function factorial(n) {
 	return n !== 0 ? n * factorial(n - 1) : 1;
+}
+function roundDecimals(n) {
+	Math.round(n * 100000) / 100000
 }
 
 //a = ~a + 1; - use the bitwises operator to implement a negate function ±
@@ -60,13 +58,23 @@ function operate(x, oper, y) {
 	}
 }
 
-function isInArray(value, array) {
+function isInArray(array) {
 	for (let i = 0; i <= array; i++) {
 		if (isInArray('+', numberValues) || isInArray('-', numberValues) || isInArray('/', numberValues) || isInArray('*', numberValues) || isInArray('**', numberValues)) {
 			 array.pop('+');
 			 array.pop('-');
 			 array.pop('*');
 			 array.pop('/');
+			 array.pop('1');
+			 array.pop('2');
+			 array.pop('3');
+			 array.pop('4');
+			 array.pop('5');
+			 array.pop('6');
+			 array.pop('7');
+			 array.pop('8');
+			 array.pop('9');
+			 array.pop('0');
 		}
 		}
 	return array;
@@ -96,11 +104,14 @@ calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
 	// console.log(isInArray(dispCont.value, dispCont.value));
  }));
 
- document.addEventListener('keypress', (e) => {
+ document.addEventListener('keydown', (e) => {
+	 e.preventDefault();
 	if (e.which == 49) {
 		dispCont.value += 1;
+		numberValues = displayValues;
 	} else if (e.which == 50) {
 		dispCont.value += 2;
+		numberValues = displayValues;
 	} else if (e.which == 51) {
 		dispCont.value += 3;
 	} else if (e.which == 52) {
@@ -115,44 +126,77 @@ calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
 		dispCont.value += 8;
 	} else if (e.which == 57) {
 		dispCont.value += 9;
-	} else if (e.which == 48) {
+	} else if (e.which == 46) {
+		displayValues = '';
+		dispCont.value = '';
+		histDispCont.value = '';
+		numberValues = [];
+		operatorValues = []
+	} else if (e.which == 8) {
+		backSpace();
+	} else if (e.which == 78) {
+		calcFactorial();
+	} 	
+	else if (e.which == 48) {
 		dispCont.value += 0;
+	} else if (e.which == 190) {
+		if (dispCont.value.indexOf('.') > -1){
+            return;
+        } else {
+            return dispCont.value += '.';
+        }
+		//dispCont.value += decimalPoint.value;
+	} else if (e.which == 13) {
+		equalFunc(e);
 	}
+		console.log(e.which);
 	numberValues = dispCont.value;
 })
 
-equalSign.addEventListener('click', function(e) {
+equalSign.addEventListener('click', equalFunc);
+let isClicked = false;
+function equalFunc(e) {
 	if (histDispCont.value == '') {
 		//stop from clicking if display is empty
 		
 		//dispCont.value = operate(parseFloat(histDispCont.value), '+', parseFloat(histDispCont))
 		e.disabled = true
 		histDispCont.value = '';
+
+		isClicked = false;
+		if (isClicked = false) {
+			e.disabled = true;
+		}
+
 	} else {
 	histDispCont.value += dispCont.value;
 	dispCont.value = ''; 
 	let result = operate(parseFloat(histDispCont.value), operatorValues.charAt(operatorValues.length-1), parseFloat(numberValues))
-
-	dispCont.value = result;
-	console.log(dispCont.value = result)
+	let rounded = Math.round(result * 100000) / 100000;
+	dispCont.value = rounded;
+	//console.log(dispCont.value = result)
 	e.disabled = false;
 }
-});
+}
 
-factorialOper.addEventListener('click', () => {
-	// dispCont.value += `fact(${dispCont.value})`;
+function calcFactorial() {
+	if (dispCont.value == '') {
+		histDispCont.value = '';
+	} else {
 	numberValues = dispCont.value;
 	histDispCont.value = `fact(${dispCont.value})`; 
 	let result = factorial(numberValues);
 	dispCont.value = +(result.toFixed(8));
-})
+	}
+}
+
+factorialOper.addEventListener('click', calcFactorial);
 
 decimalPoint.addEventListener('click', (e) => {
-	console.log(e.target)
-	if (e.target.length > 1) {
-		e.target.disabled = true
-	} else if (e.target.length <= 1){
-		e.target.disabled = false;
+	if (dispCont.value.indexOf('.') > -1){
+		return;
+	} else {
+		return dispCont.value += '.';
 	}
 })
 
@@ -164,13 +208,13 @@ decimalPoint.addEventListener('click', (e) => {
 //result. While the normal dispaly should be displaying the numbers and operators and
 //after the equals should become empty.
 
-//need to store the first number that is input into the calculator when a user 
-//presses an operator, and also save which operation has been chosen and then operate() on 
-//them when the user presses the “=” key.
+//make the operators act as equals every time more than 1 equation is made
+//make the display of max 12-13 input numbers
+//round big numbers and floating numbers to 8 decimal values
 
-let pushingNums = function(numbies) {
-	numbies.push(numberValues);
-}
+// let pushingNums = function(numbies) {
+// 	numbies.push(numberValues);
+// }
 
     const CE = document.querySelector('.clear');
     CE.addEventListener('click', () => {
@@ -184,6 +228,7 @@ let pushingNums = function(numbies) {
 		operatorValues = []
 	})
 	
-	backspace.addEventListener('click', () => {
+	function backSpace() {
 		dispCont.value = dispCont.value.substring(0, dispCont.value.length-1)
-	})
+	}
+	backspace.addEventListener('click', backSpace);
