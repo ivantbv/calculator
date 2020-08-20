@@ -117,13 +117,13 @@ function operatorFunc(e) {
 	}
 	} else if (e.which == 55 || e.which == 103) {
 		dispCont.value += 7;
-	} else if (e.which == 56) {
+	} else if (e.which == 56 || e.which == 104) {
 		if (shiftPressed == true) {
 			return;
 		} else {
 		dispCont.value += 8;
 	}
-	} else if (e.which == 57 || e.which == 104) {
+	} else if (e.which == 57 || e.which == 105) {
 		dispCont.value += 9;
 	} else if (e.which == 46) {
 		displayValues = '';
@@ -168,7 +168,7 @@ function operatorFunc(e) {
 document.addEventListener('keydown', function(e) {
 	if (e.which == 16) {shiftPressed = true;} 
 
-	if (e.which == 56 && shiftPressed) {
+	if (e.which == 56 && shiftPressed || e.which == 106) {
 		histDispCont.value = dispCont.value + multiplySign.value;
 		operatorValues += multiplySign.value;
 		dispCont.value = '';
