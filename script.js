@@ -88,9 +88,14 @@ calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
 
 function operatorFunc(e) {
 		//histDispCont.value = e.target.value;
+
 		histDispCont.value = dispCont.value + e.target.value;
+		console.log(histDispCont.value);
 		operatorValues += e.target.value;
 		dispCont.value = '';
+		histDispCont.value;
+ //operate(parseFloat(histDispCont.value), operatorValues.charAt(operatorValues.length-1), parseFloat(numberValues))
+
 }
 
  allOperators.forEach(btn => btn.addEventListener('click', operatorFunc));
@@ -144,14 +149,13 @@ function operatorFunc(e) {
         } else {
             return dispCont.value += '.';
         }
-		//dispCont.value += decimalPoint.value;
 	} else if (e.which == 13) {
 		equalFunc(e);
 	} else if (e.which == 107) {
 		histDispCont.value = dispCont.value + plusSign.value;
 		operatorValues += plusSign.value;
 		dispCont.value = '';
-	} else if (e.which == 189 || e.which == 109) {
+	} else if (e.which == 189 || e.which == 109 || e.which == 173) {
 		//histDispCont.value = dispCont.value + operatorFunc(e);
 		histDispCont.value = dispCont.value + subtractSign.value;
 		operatorValues += subtractSign.value;
@@ -181,7 +185,6 @@ document.addEventListener('keydown', function(e) {
 		operatorValues += plusSign.value;
 		dispCont.value = '';
 	}
-	//add the plusSign as well
 });
 
 document.addEventListener('keyup', function(e) {
@@ -197,8 +200,6 @@ function equalFunc(e) {
 		//dispCont.value = operate(parseFloat(histDispCont.value), '+', parseFloat(histDispCont))
 		e.disabled = true
 		histDispCont.value = '';
-
-		isClicked = false;
 		if (isClicked = false) {
 			e.disabled = true;
 		}
@@ -237,14 +238,6 @@ decimalPoint.addEventListener('click', (e) => {
 // 	return self.indexOf(item) == pos;
 //   }).join('')
 
-//display-history should listen for clicks on the equals and dispaly the
-//result. While the normal dispaly should be displaying the numbers and operators and
-//after the equals should become empty.
-
-//make the operators act as equals every time more than 1 equation is made
-//make the display of max 12-13 input numbers
-//round big numbers and floating numbers to 8 decimal values
-
 // let pushingNums = function(numbies) {
 // 	numbies.push(numberValues);
 // }
@@ -265,3 +258,10 @@ decimalPoint.addEventListener('click', (e) => {
 		dispCont.value = dispCont.value.substring(0, dispCont.value.length-1)
 	}
 	backspace.addEventListener('click', backSpace);
+
+	//display-history should listen for clicks on the equals and display the
+//result. While the normal dispaly should be displaying the numbers and operators and
+//after the equals should become empty.
+
+//make the operators act as equals every time more than 1 equation is made
+//make the display of max 12-13 input numbers

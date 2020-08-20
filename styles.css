@@ -18,7 +18,7 @@ body {
 
 #calculator {
     display: grid;
-    grid-template: repeat(6, 82px) / repeat(4, 82px);
+    grid-template: repeat(6, 80px) / repeat(4, 80px);
     padding: 5px;
     border: solid 3px rgba(72, 134, 204, 0.603);
     grid-template-areas: 
