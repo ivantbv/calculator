@@ -12,13 +12,60 @@ body {
     padding: 0;
 }
 
+.helptip {
+    position: relative;
+    border-bottom: 1px dotted black;
+  }
+  .helptip span {
+    visibility: hidden;
+    width: 10em;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 9;
+    top: -1em;
+    left:  100%;
+    margin-left:1em;
+    opacity: 0;
+    transition: opacity 1s;
+  }
+  .helptip span::after {
+    content: "";
+    /* position: absolute; */
+    top: 1.5em;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+  }
+  .helptip input {
+    display:none;
+  }
+  .helptip input:checked+span {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  #help {
+      text-decoration: none;
+      font-size: 24px;
+      cursor: help;
+      color: rgba(53, 121, 128, 0.89);
+      position: absolute;
+      padding: 0;
+  }
+
 #spacey {
-    height: 7px;
+    height: 10px;
 }
 
 #calculator {
     display: grid;
-    grid-template: repeat(6, 80px) / repeat(4, 80px);
+    grid-template: repeat(6, 76px) / repeat(4, 76px);
     padding: 5px;
     border: solid 3px rgba(72, 134, 204, 0.603);
     grid-template-areas: 
@@ -34,7 +81,7 @@ body {
 .btn {
     font-size: larger;
     border: 1px solid rgba(72, 134, 204, 0.972);
-    background-color: rgb(240, 239, 239);
+    background-color: rgba(238, 238, 238, 0.87);
     outline:none;
 }
 
@@ -166,6 +213,7 @@ body {
 
 #foo-ter {
     padding-top: 50px;
+    padding-bottom: 0;
 }
 
 .tooltip {
