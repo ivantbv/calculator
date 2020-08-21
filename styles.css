@@ -160,3 +160,7 @@ body {
     grid-area: p;
 }
 
+.operator-equals:disabled {
+    color: black;
+}
+

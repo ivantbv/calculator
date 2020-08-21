@@ -20,6 +20,13 @@ function roundDecimals(n) {
 	Math.round(n * 100000) / 100000
 }
 
+function negate(n) {
+	return n = -n;
+}
+//√
+function squareRoot(n) {
+	return Math.sqrt(n);
+}
 //a = ~a + 1; - use the bitwises operator to implement a negate function ±
 
 const calcBtns = document.querySelectorAll('.nmb');
@@ -88,17 +95,18 @@ calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
 
 function operatorFunc(e) {
 		//histDispCont.value = e.target.value;
-
 		histDispCont.value = dispCont.value + e.target.value;
 		console.log(histDispCont.value);
 		operatorValues += e.target.value;
 		dispCont.value = '';
 		histDispCont.value;
- //operate(parseFloat(histDispCont.value), operatorValues.charAt(operatorValues.length-1), parseFloat(numberValues))
-
+ //operate(parseFloat(histDispCont.value), operatorValues.charAt(operatorValues.length-1), parseFloat(numberValues))		 
 }
 
- allOperators.forEach(btn => btn.addEventListener('click', operatorFunc));
+ allOperators.forEach(btn => btn.addEventListener('click', (e) => {
+	operatorFunc(e)
+	equalSign.disabled = false;
+}));
 
  document.addEventListener('keydown', (e) => {
 	 e.preventDefault();
@@ -151,19 +159,23 @@ function operatorFunc(e) {
         }
 	} else if (e.which == 13) {
 		equalFunc(e);
+		
 	} else if (e.which == 107) {
 		histDispCont.value = dispCont.value + plusSign.value;
 		operatorValues += plusSign.value;
 		dispCont.value = '';
+		equalSign.disabled = false;
 	} else if (e.which == 189 || e.which == 109 || e.which == 173) {
 		//histDispCont.value = dispCont.value + operatorFunc(e);
 		histDispCont.value = dispCont.value + subtractSign.value;
 		operatorValues += subtractSign.value;
 		dispCont.value = '';
+		equalSign.disabled = false;
 	} else if (e.which == 111  || e.which == 191) {
 		histDispCont.value = dispCont.value + divideSign.value;
 		operatorValues += divideSign.value;
 		dispCont.value = '';
+		equalSign.disabled = false;
 	}
 	console.log(e.which);
 	
@@ -176,14 +188,17 @@ document.addEventListener('keydown', function(e) {
 		histDispCont.value = dispCont.value + multiplySign.value;
 		operatorValues += multiplySign.value;
 		dispCont.value = '';
+		equalSign.disabled = false;
 	} else if (e.which == 54 && shiftPressed) {
 		histDispCont.value = dispCont.value + powerSign.value;
 		operatorValues += powerSign.value;
 		dispCont.value = '';
-	} else if (e.which == 187 && shiftPressed) {
+		equalSign.disabled = false;
+	} else if (e.which == 187 || e.which == 61 && shiftPressed) {
 		histDispCont.value = dispCont.value + plusSign.value;
 		operatorValues += plusSign.value;
 		dispCont.value = '';
+		equalSign.disabled = false;
 	}
 });
 
@@ -191,28 +206,27 @@ document.addEventListener('keyup', function(e) {
 	if(e.which == 16) { shiftPressed = false}	
 })
 
-equalSign.addEventListener('click', equalFunc);
-let isClicked = false;
 function equalFunc(e) {
-	if (histDispCont.value == '') {
-		//stop from clicking if display is empty
-		
-		//dispCont.value = operate(parseFloat(histDispCont.value), '+', parseFloat(histDispCont))
-		e.disabled = true
-		histDispCont.value = '';
-		if (isClicked = false) {
-			e.disabled = true;
-		}
 
-	} else {
+	if (!histDispCont.value) {
+		//stop from clicking if display is empty
+		//dispCont.value = operate(parseFloat(histDispCont.value), '+', parseFloat(histDispCont))
+		histDispCont.value = '';
+	}
+	//set disabled/enabled equals button if some operator has been clicked
+	else {
 	histDispCont.value += dispCont.value;
 	dispCont.value = ''; 
 	let result = operate(parseFloat(histDispCont.value), operatorValues.charAt(operatorValues.length-1), parseFloat(numberValues))
 	let rounded = Math.round(result * 100000) / 100000;
 	dispCont.value = rounded;
-	e.disabled = false;
+
+	equalSign.disabled = true;
 }
 }
+
+
+equalSign.addEventListener('click', equalFunc);
 
 function calcFactorial() {
 	if (dispCont.value == '') {
@@ -232,6 +246,7 @@ decimalPoint.addEventListener('click', (e) => {
 	} else {
 		return dispCont.value += '.';
 	}
+	
 })
 
 // .split('').filter(function(item, pos, self) {
