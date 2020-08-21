@@ -27,6 +27,7 @@ function negate(n) {
 function squareRoot(n) {
 	return Math.sqrt(n);
 }
+
 //a = ~a + 1; - use the bitwises operator to implement a negate function ±
 
 const calcBtns = document.querySelectorAll('.nmb');
@@ -68,18 +69,6 @@ function operate(x, oper, y) {
 	}
 }
 
-function isInArray(array, values) {
-	for (let i = 0; i <= array; i++) {
-		if (isInArray('+', values) || isInArray('-', values)
-		 || isInArray('/', values) || isInArray('*', values) || isInArray('**', values)) {
-			 array.pop('+');
-			 array.pop('-');
-			 array.pop('*');
-			 array.pop('/');
-		}
-		}
-	return array;
-  }
 let shiftPressed = false;
 let displayValues;
 let numberValues = [];
@@ -94,19 +83,22 @@ calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
 }));
 
 function operatorFunc(e) {
-		//histDispCont.value = e.target.value;
-		histDispCont.value = dispCont.value + e.target.value;
-		console.log(histDispCont.value);
-		operatorValues += e.target.value;
-		dispCont.value = '';
-		histDispCont.value;
- //operate(parseFloat(histDispCont.value), operatorValues.charAt(operatorValues.length-1), parseFloat(numberValues))		 
+
+	histDispCont.value = dispCont.value + e.target.value;
+	console.log(histDispCont.value);
+	operatorValues += e.target.value;
+	dispCont.value = '';
+	histDispCont.value;
 }
 
  allOperators.forEach(btn => btn.addEventListener('click', (e) => {
 	operatorFunc(e)
-	equalSign.disabled = false;
+	equalSign.disabled = false;	
 }));
+
+let contains = function (haystack, needle) {
+    return !!~haystack.indexOf(needle);
+};
 
  document.addEventListener('keydown', (e) => {
 	 e.preventDefault();
@@ -159,7 +151,18 @@ function operatorFunc(e) {
         }
 	} else if (e.which == 13) {
 		equalFunc(e);
-		
+
+		if (dispCont.value == 'NaN') {
+			histDispCont.value = '';
+			dispCont.value = '';
+
+		}
+				//let arryed = Array.from(histDispCont.value);
+				// let splitted = histDispCont.value.split('');
+				// if (splitted.includes('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')) {
+				// 	histDispCont.value = '';
+				// }
+
 	} else if (e.which == 107) {
 		histDispCont.value = dispCont.value + plusSign.value;
 		operatorValues += plusSign.value;
@@ -194,7 +197,7 @@ document.addEventListener('keydown', function(e) {
 		operatorValues += powerSign.value;
 		dispCont.value = '';
 		equalSign.disabled = false;
-	} else if (e.which == 187 || e.which == 61 && shiftPressed) {
+	} else if (e.which == 61 || e.which == 187 && shiftPressed) {
 		histDispCont.value = dispCont.value + plusSign.value;
 		operatorValues += plusSign.value;
 		dispCont.value = '';
@@ -212,15 +215,14 @@ function equalFunc(e) {
 		//stop from clicking if display is empty
 		//dispCont.value = operate(parseFloat(histDispCont.value), '+', parseFloat(histDispCont))
 		histDispCont.value = '';
-	}
-	//set disabled/enabled equals button if some operator has been clicked
+	} //set disabled/enabled equals button if some operator has been clicked
 	else {
 	histDispCont.value += dispCont.value;
 	dispCont.value = ''; 
 	let result = operate(parseFloat(histDispCont.value), operatorValues.charAt(operatorValues.length-1), parseFloat(numberValues))
 	let rounded = Math.round(result * 100000) / 100000;
 	dispCont.value = rounded;
-
+		numberValues = '';
 	equalSign.disabled = true;
 }
 }
