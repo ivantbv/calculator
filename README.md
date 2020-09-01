@@ -1,6 +1,7 @@
 # calculator
 
-This is a simple browser calculator made in vanilla JavaScript
+This is a simple browser calculator made in vanilla JavaScript. Supports multiple equations.
+
 
 -custom made function for the operations (no eval() used!)
 -full keyboard support: type operators and operands just like
@@ -12,4 +13,4 @@ you would as usual, using the numbers over the QWERTY, OR/AND the numpad. Press 
     - shift ^ (power) 
     - n (factorial)
 
-Please note: it doesnt support multiple equations.
+    Try it live here:  ivantbv.github.io/calculator/ 

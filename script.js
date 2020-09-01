@@ -24,9 +24,9 @@ function negate(n) {
 	return n = -n;
 }
 //√
-function squareRoot(n) {
-	return Math.sqrt(n);
-}
+// function squareRoot(n) {
+// 	return Math.sqrt(n);
+// }
 
 //a = ~a + 1; - use the bitwises operator to implement a negate function ±
 
@@ -34,6 +34,7 @@ const calcBtns = document.querySelectorAll('.nmb');
 const operBtns = document.querySelectorAll('.oper')
 const dispCont = document.querySelector('#display');
 const histDispCont = document.querySelector('#disp-history');
+let paraForHist = document.createElement('p');
 const inputFromDisp = dispCont.value;
 const equalSign = document.querySelector('.operator-equals')
 
@@ -79,16 +80,38 @@ let afterOperatorNumbers = [];
 calcBtns.forEach(btn => btn.addEventListener('click', (e) => {
 	
 	displayValues = dispCont.value += e.target.value;
-	numberValues = displayValues;
+
+	numberValues = dispCont.value
+
+//	numberValues = displayValues;
+
 }));
 
 function operatorFunc(e) {
+	if (numberValues != '' && histDispCont.value != '') {
+		//histDispCont.value.substring(histDispCont.value.lastIndexOf(e.target.value) + 1);
+		if (histDispCont.value.includes('fact')) {
+			histDispCont.value = '';
+		}
+		equalFunc(e);	
+	} 
 
-	histDispCont.value = dispCont.value + e.target.value;
-	console.log(histDispCont.value);
-	operatorValues += e.target.value;
-	dispCont.value = '';
-	histDispCont.value;
+	if (dispCont.value == null || histDispCont.value == null) {
+		e.target.value = ''
+		dispCont.value = '';
+		histDispCont.value = '';
+	}
+
+	if (dispCont.value.indexOf('NaN') > -1 || histDispCont.value.indexOf('NaN') > -1){
+		dispCont.value = '';
+	}
+	// histDispCont.value += dispCont.value
+	// dispCont.value = ''
+
+		histDispCont.value = `${dispCont.value}${e.target.value}`;
+		console.log(numberValues);
+		operatorValues = `${operatorValues}${e.target.value}` 
+		dispCont.value = '';
 }
 
  allOperators.forEach(btn => btn.addEventListener('click', (e) => {
@@ -96,9 +119,11 @@ function operatorFunc(e) {
 	equalSign.disabled = false;	
 }));
 
-let contains = function (haystack, needle) {
-    return !!~haystack.indexOf(needle);
-};
+function domNode(nodeType, text) {
+    var node = document.createElement(nodeType);
+    if (text) node.appendChild(document.createTextNode(text));
+    return node;
+    }
 
  document.addEventListener('keydown', (e) => {
 	 e.preventDefault();
@@ -150,31 +175,71 @@ let contains = function (haystack, needle) {
             return dispCont.value += '.';
         }
 	} else if (e.which == 13) {
-		equalFunc(e);
 
-		if (dispCont.value == 'NaN') {
-			histDispCont.value = '';
-			dispCont.value = '';
+		if (numberValues != '' && histDispCont.value != '') {
 
-		}
+			//histDispCont.value.substring(histDispCont.value.lastIndexOf(e.target.value) + 1);
+			if (histDispCont.value.includes('fact')) {
+				histDispCont.value = '';
+			}
+		} 
+
+		let splitted = dispCont.value.split('');
+		if (splitted.includes('N', 'A')) {
+				 	dispCont.value = '';
+				}
+
 				//let arryed = Array.from(histDispCont.value);
 				// let splitted = histDispCont.value.split('');
 				// if (splitted.includes('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')) {
 				// 	histDispCont.value = '';
 				// }
 
+				equalFunc(e);
+
 	} else if (e.which == 107) {
+		if (numberValues != null && histDispCont.value != null) {
+			equalFunc(e);		
+		} 
+	
+		if (dispCont.value == null || histDispCont.value == null) {
+			
+			dispCont.value = '';
+			histDispCont.value = '';
+		}
+
 		histDispCont.value = dispCont.value + plusSign.value;
 		operatorValues += plusSign.value;
 		dispCont.value = '';
 		equalSign.disabled = false;
 	} else if (e.which == 189 || e.which == 109 || e.which == 173) {
-		//histDispCont.value = dispCont.value + operatorFunc(e);
+		if (shiftPressed == true) {
+			return;
+		} else {
+
+		if (numberValues != null && histDispCont.value != null) {
+			equalFunc(e);		
+		} 
+		if (dispCont.value == null || histDispCont.value == null) {
+			dispCont.value = '';
+			histDispCont.value = '';
+		}
+
 		histDispCont.value = dispCont.value + subtractSign.value;
 		operatorValues += subtractSign.value;
 		dispCont.value = '';
 		equalSign.disabled = false;
+		}
 	} else if (e.which == 111  || e.which == 191) {
+		if (numberValues != null && histDispCont.value != null) {
+			equalFunc(e);		
+		} 
+		if (dispCont.value == null || histDispCont.value == null) {
+			dispCont.value = '';
+			histDispCont.value = '';
+		}
+
+
 		histDispCont.value = dispCont.value + divideSign.value;
 		operatorValues += divideSign.value;
 		dispCont.value = '';
@@ -186,20 +251,52 @@ let contains = function (haystack, needle) {
 })
 document.addEventListener('keydown', function(e) {
 	if (e.which == 16) {shiftPressed = true;} 
-
 	if (e.which == 56 && shiftPressed || e.which == 106) {
+		if (numberValues != null && histDispCont.value != null) {
+			equalFunc(e);		
+		}
+		if (dispCont.value == null || histDispCont.value == null) {
+			
+			dispCont.value = '';
+			histDispCont.value = '';
+		}
+		
 		histDispCont.value = dispCont.value + multiplySign.value;
 		operatorValues += multiplySign.value;
 		dispCont.value = '';
 		equalSign.disabled = false;
 	} else if (e.which == 54 && shiftPressed) {
+		if (numberValues != null && histDispCont.value != null) {
+
+			if (histDispCont.value.includes('fact')) {
+				histDispCont.value = '';
+			}
+			equalFunc(e);		
+		} 
+	
+		if (dispCont.value == null || histDispCont.value == null) {
+			
+			dispCont.value = '';
+			histDispCont.value = '';
+		}
+
 		histDispCont.value = dispCont.value + powerSign.value;
 		operatorValues += powerSign.value;
 		dispCont.value = '';
 		equalSign.disabled = false;
 	} else if (e.which == 61 || e.which == 187 && shiftPressed) {
-		histDispCont.value = dispCont.value + plusSign.value;
-		operatorValues += plusSign.value;
+		if (numberValues != '' && histDispCont.value != '') {
+			equalFunc(e);		
+		} 
+	
+		if (dispCont.value == null || histDispCont.value == null) {
+			dispCont.value = '';
+			histDispCont.value = '';
+		}
+	
+		histDispCont.value = `${dispCont.value}${plusSign.value}`;
+		console.log(numberValues);
+		operatorValues = `${operatorValues}${plusSign.value}` 
 		dispCont.value = '';
 		equalSign.disabled = false;
 	}
@@ -210,22 +307,36 @@ document.addEventListener('keyup', function(e) {
 })
 
 function equalFunc(e) {
+		if (dispCont.value.indexOf('NaN') > -1){
+			dispCont.value = '';
+		} 
 
 	if (!histDispCont.value) {
 		//stop from clicking if display is empty
-		//dispCont.value = operate(parseFloat(histDispCont.value), '+', parseFloat(histDispCont))
 		histDispCont.value = '';
-	} //set disabled/enabled equals button if some operator has been clicked
+	} 
 	else {
 	histDispCont.value += dispCont.value;
 	dispCont.value = ''; 
+
+	if (numberValues != '' && histDispCont.value != '') {
 	let result = operate(parseFloat(histDispCont.value), operatorValues.charAt(operatorValues.length-1), parseFloat(numberValues))
+	
+
 	let rounded = Math.round(result * 100000) / 100000;
 	dispCont.value = rounded;
-		numberValues = '';
+		console.log(numberValues);
+		histDispCont.value = '';
+
+		let splitted = dispCont.value.split('');
+		if (splitted.includes('N', 'A')) {
+				 	dispCont.value = '';
+				}
 	equalSign.disabled = true;
+	}
 }
 }
+
 
 
 equalSign.addEventListener('click', equalFunc);
@@ -237,7 +348,8 @@ function calcFactorial() {
 	numberValues = dispCont.value;
 	histDispCont.value = `fact(${dispCont.value})`; 
 	let result = factorial(numberValues);
-	dispCont.value = +(result.toFixed(8));
+	//ispCont.value = +(result.toFixed(7));
+	dispCont.value = result
 	}
 }
 factorialOper.addEventListener('click', calcFactorial);
@@ -246,18 +358,12 @@ decimalPoint.addEventListener('click', (e) => {
 	if (dispCont.value.indexOf('.') > -1){
 		return;
 	} else {
-		return dispCont.value += '.';
+		 dispCont.value += '.';
+		 //numberValues = null;
+		//histDispCont.value = '';
+		 
 	}
-	
 })
-
-// .split('').filter(function(item, pos, self) {
-// 	return self.indexOf(item) == pos;
-//   }).join('')
-
-// let pushingNums = function(numbies) {
-// 	numbies.push(numberValues);
-// }
 
     const CE = document.querySelector('.clear');
     CE.addEventListener('click', () => {
@@ -273,12 +379,6 @@ decimalPoint.addEventListener('click', (e) => {
 	
 	function backSpace() {
 		dispCont.value = dispCont.value.substring(0, dispCont.value.length-1)
+		numberValues = numberValues.substring(0, numberValues.length-1);
 	}
 	backspace.addEventListener('click', backSpace);
-
-	//display-history should listen for clicks on the equals and display the
-//result. While the normal dispaly should be displaying the numbers and operators and
-//after the equals should become empty.
-
-//make the operators act as equals every time more than 1 equation is made
-//make the display of max 12-13 input numbers
